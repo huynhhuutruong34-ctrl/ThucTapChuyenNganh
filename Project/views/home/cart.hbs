@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Cloth Shop</title>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #F9F9F9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #cedcd3;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .cart-list {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .item-info img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .item-info div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-info div h4 {
+            margin: 0 0 5px 0;
+            font-size: 1rem;
+        }
+
+        .item-info div p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .item-price {
+            font-weight: 600;
+            color: #161817;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #D7EAD9;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .checkout-btn:hover {
+            background-color: #b8d6b9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+
+        @media(max-width: 600px) {
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .item-info {
+                flex-direction: row;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="container">
+    <h1>Your Cart</h1>
+
+    <div class="cart-list">
+        <div class="cart-item">
+            <div class="item-info">
+                <img src="images/11.jpg" alt="Denim Jacket">
+                <div>
+                    <h4>Men’s Denim Jacket</h4>
+                    <p>Size: M | Color: Blue</p>
+                </div>
+            </div>
+            <div class="item-price">$79</div>
+        </div>
+
+        <div class="cart-item">
+            <div class="item-info">
+                <img src="images/12.jpg" alt="White T-shirt">
+                <div>
+                    <h4>Classic White T-shirt</h4>
+                    <p>Size: L | Color: White</p>
+                </div>
+            </div>
+            <div class="item-price">$29</div>
+        </div>
+
+        <div class="cart-item">
+            <div class="item-info">
+                <img src="images/13.jpg" alt="Leather Handbag">
+                <div>
+                    <h4>Leather Handbag</h4>
+                    <p>Color: Brown</p>
+                </div>
+            </div>
+            <div class="item-price">$129</div>
+        </div>
+
+        <div class="total">
+            <span>Total:</span>
+            <span>$237</span>
+        </div>
+
+        <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+</div>
+
+
+</body>
+</html>

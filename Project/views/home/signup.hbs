@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Sign Up - Cloth Shop</title>
     <style>
         body {
             font-family: 'Nunito', sans-serif;
-            margin: 0;
-            padding: 0;
             background-color: #F9F9F9;
             color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
-            background-color: #A8D5BA;
+            background-color: #cedcd3;
             padding: 20px 0;
             text-align: center;
             font-size: 1.8rem;
@@ -23,730 +25,122 @@
             color: white;
         }
 
-        nav {
-            background-color: #D7EAD9;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        nav a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #333;
-            font-weight: 600;
-            transition: color 0.2s;
-        }
-
-        nav a:hover {
-            color: #4C9F70;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        h1 {
-            text-align: center;
-            font-size: 2rem;
-            color: #4C9F70;
-            margin-bottom: 20px;
-        }
-
         .signup-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 40px;
-            gap: 30px;
-        }
-
-        .signup-form {
-            background-color: #fff;
-            flex: 1 1 500px;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-        }
-
-        .benefits {
-            background-color: #fff;
-            flex: 1 1 300px;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 15px;
-        }
-
-        .form-row .form-group {
             flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
         }
 
-        .form-group label {
+        .signup-box {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .signup-box h2 {
+            color: #161817;
+            margin-bottom: 25px;
+        }
+
+        .signup-box form {
+            text-align: left;
+        }
+
+        label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #4C9F70;
         }
 
-        .input-with-icon {
-            position: relative;
-        }
-
-        .input-with-icon i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #4C9F70;
-        }
-
-        .input-with-icon input,
-        .input-with-icon select {
+        input[type="text"], input[type="email"], input[type="password"] {
             width: 100%;
-            padding: 12px 15px 12px 45px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.95rem;
-            transition: border-color 0.3s;
-        }
-
-        .input-with-icon input:focus,
-        .input-with-icon select:focus {
-            outline: none;
-            border-color: #4C9F70;
-            box-shadow: 0 0 0 2px rgba(76, 159, 112, 0.1);
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .password-toggle:hover {
-            color: #333;
-        }
-
-        .password-strength {
-            margin-top: 5px;
-            height: 4px;
-            background: #e0e0e0;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .password-strength-bar {
-            height: 100%;
-            width: 0%;
-            transition: all 0.3s ease;
-        }
-
-        .password-strength.weak .password-strength-bar {
-            background: #e74c3c;
-            width: 33%;
-        }
-
-        .password-strength.medium .password-strength-bar {
-            background: #f39c12;
-            width: 66%;
-        }
-
-        .password-strength.strong .password-strength-bar {
-            background: #27ae60;
-            width: 100%;
-        }
-
-        .password-hints {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 5px;
-        }
-
-        .form-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 25px 0;
-            font-size: 0.9rem;
-        }
-
-        .terms-agreement {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            color: #666;
-        }
-
-        .terms-agreement input {
-            margin-top: 3px;
-        }
-
-        .terms-agreement a {
-            color: #4C9F70;
-            text-decoration: none;
-        }
-
-        .terms-agreement a:hover {
-            text-decoration: underline;
-        }
-
-        .signup-btn {
-            width: 100%;
-            padding: 14px;
-            background-color: #4C9F70;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .signup-btn:hover {
-            background-color: #3a7c55;
-        }
-
-        .signup-btn:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .divider {
-            text-align: center;
-            margin: 25px 0;
-            position: relative;
-            color: #999;
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: #e0e0e0;
-        }
-
-        .divider span {
-            background: white;
-            padding: 0 15px;
-        }
-
-        .social-signup {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-btn {
-            flex: 1;
             padding: 12px;
-            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
             border-radius: 8px;
-            background: white;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            background-color: #D7EAD9;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #b8d6b9;
+        }
+
+        .signup-box p {
+            margin-top: 15px;
             font-size: 0.9rem;
-        }
-
-        .social-btn:hover {
-            border-color: #4C9F70;
-            transform: translateY(-1px);
-        }
-
-        .social-btn.google {
-            color: #DB4437;
-        }
-
-        .social-btn.facebook {
-            color: #4267B2;
-        }
-
-        .login-link {
             text-align: center;
-            margin-top: 25px;
-            color: #666;
         }
 
-        .login-link a {
-            color: #4C9F70;
+        .signup-box a {
+            color: #4a6550;
             text-decoration: none;
             font-weight: 600;
         }
 
-        .login-link a:hover {
+        .signup-box a:hover {
             text-decoration: underline;
-        }
-
-        .benefits h3 {
-            color: #4C9F70;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .benefit-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-        }
-
-        .benefit-item:hover {
-            background-color: #f0f7f2;
-        }
-
-        .benefit-item i {
-            color: #4C9F70;
-            margin-right: 15px;
-            font-size: 1.3rem;
-            width: 25px;
-            text-align: center;
-            margin-top: 3px;
-        }
-
-        .benefit-text h4 {
-            margin: 0 0 5px 0;
-            color: #333;
-        }
-
-        .benefit-text p {
-            margin: 0;
-            color: #666;
-            font-size: 0.9rem;
         }
 
         footer {
             text-align: center;
-            padding: 20px;
-            font-size: 0.9rem;
-            color: #999;
-            margin-top: 40px;
-            background-color: #D7EAD9;
-        }
-
-        @media(max-width: 768px) {
-            .signup-container {
-                flex-direction: column;
-            }
-
-            .signup-form, .benefits {
-                flex: 1 1 100%;
-            }
-
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-
-            .form-options {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #4C9F70;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.2);
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification.error {
-            background: #e74c3c;
-        }
-
-        .required::after {
-            content: " *";
-            color: #e74c3c;
-        }
-
-        .password-criteria {
-            font-size: 0.8rem;
+            padding: 15px;
+        s
             color: #666;
-            margin-top: 5px;
+            font-size: 0.9rem;
         }
 
-        .criteria-met {
-            color: #27ae60;
+        @media(max-width: 600px) {
+            .signup-box {
+                padding: 25px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Tạo Tài Khoản Mới</h1>
 
-    <div class="signup-container">
-        <div class="signup-form">
-            <form id="signupForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="firstName" class="required">Họ</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="firstName" name="firstName" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName" class="required">Tên</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="lastName" name="lastName" required>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="email" class="required">Email</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                </div>
+<div class="signup-container">
+    <div class="signup-box">
+        <h2>Create Your Account</h2>
+        <form>
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" placeholder="Enter your full name" required>
 
-                <div class="form-group">
-                    <label for="phone" class="required">Số điện thoại</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-phone"></i>
-                        <input type="tel" id="phone" name="phone" required>
-                    </div>
-                </div>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
 
-                <div class="form-group">
-                    <label for="username" class="required">Tên đăng nhập</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-user-circle"></i>
-                        <input type="text" id="username" name="username" required>
-                    </div>
-                </div>
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required>
 
-                <div class="form-group">
-                    <label for="password" class="required">Mật khẩu</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password" name="password" required>
-                        <button type="button" class="password-toggle" onclick="togglePassword('password')">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                    <div class="password-strength" id="passwordStrength">
-                        <div class="password-strength-bar"></div>
-                    </div>
-                    <div class="password-criteria" id="passwordCriteria">
-                        Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt
-                    </div>
-                </div>
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" placeholder="Confirm your password" required>
 
-                <div class="form-group">
-                    <label for="confirmPassword" class="required">Xác nhận mật khẩu</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="confirmPassword" name="confirmPassword" required>
-                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
+            <button type="submit">Sign Up</button>
 
-                <div class="form-options">
-                    <label class="terms-agreement">
-                        <input type="checkbox" id="agreeTerms" required>
-                        Tôi đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a>
-                    </label>
-                </div>
-
-                <div class="form-options">
-                    <label class="terms-agreement">
-                        <input type="checkbox" id="newsletter">
-                        Tôi muốn nhận thông tin khuyến mãi và cập nhật mới nhất qua email
-                    </label>
-                </div>
-
-                <button type="submit" class="signup-btn" id="signupBtn">
-                    <i class="fas fa-user-plus"></i>
-                    Đăng ký tài khoản
-                </button>
-
-                <div class="divider">
-                    <span>Hoặc đăng ký với</span>
-                </div>
-
-                <div class="social-signup">
-                    <button type="button" class="social-btn google">
-                        <i class="fab fa-google"></i>
-                        Google
-                    </button>
-                    <button type="button" class="social-btn facebook">
-                        <i class="fab fa-facebook-f"></i>
-                        Facebook
-                    </button>
-                </div>
-
-                <div class="login-link">
-                    Đã có tài khoản? <a href="/login">Đăng nhập ngay</a>
-                </div>
-            </form>
-        </div>
-
-        <div class="benefits">
-            <h3>Lợi ích khi đăng ký</h3>
-            <div class="benefit-item">
-                <i class="fas fa-shopping-bag"></i>
-                <div class="benefit-text">
-                    <h4>Theo dõi đơn hàng</h4>
-                    <p>Quản lý và theo dõi trạng thái đơn hàng dễ dàng</p>
-                </div>
-            </div>
-            <div class="benefit-item">
-                <i class="fas fa-tags"></i>
-                <div class="benefit-text">
-                    <h4>Ưu đãi đặc biệt</h4>
-                    <p>Nhận các chương trình khuyến mãi dành riêng cho thành viên</p>
-                </div>
-            </div>
-            <div class="benefit-item">
-                <i class="fas fa-heart"></i>
-                <div class="benefit-text">
-                    <h4>Sản phẩm yêu thích</h4>
-                    <p>Lưu trữ danh sách sản phẩm yêu thích của bạn</p>
-                </div>
-            </div>
-            <div class="benefit-item">
-                <i class="fas fa-bolt"></i>
-                <div class="benefit-text">
-                    <h4>Thanh toán nhanh</h4>
-                    <p>Lưu thông tin thanh toán để mua sắm nhanh chóng</p>
-                </div>
-            </div>
-            <div class="benefit-item">
-                <i class="fas fa-history"></i>
-                <div class="benefit-text">
-                    <h4>Lịch sử mua hàng</h4>
-                    <p>Xem lại tất cả các đơn hàng đã mua</p>
-                </div>
-            </div>
-            <div class="benefit-item">
-                <i class="fas fa-gift"></i>
-                <div class="benefit-text">
-                    <h4>Điểm tích lũy</h4>
-                    <p>Tích điểm cho mỗi lần mua hàng và đổi quà tặng</p>
-                </div>
-            </div>
-        </div>
+            <p>Already have an account? <a href="/login">Login</a></p>
+        </form>
     </div>
 </div>
 
-
-<div class="notification" id="notification">
-    <span id="notificationMessage"></span>
-</div>
-
-<script>
-    function togglePassword(fieldId) {
-        const passwordInput = document.getElementById(fieldId);
-        const toggleIcon = passwordInput.parentElement.querySelector('.password-toggle i');
-
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            toggleIcon.className = 'fas fa-eye-slash';
-        } else {
-            passwordInput.type = 'password';
-            toggleIcon.className = 'fas fa-eye';
-        }
-    }
-
-    function showNotification(message, type = 'success') {
-        const notification = document.getElementById('notification');
-        const messageEl = document.getElementById('notificationMessage');
-
-        messageEl.textContent = message;
-        notification.className = `notification show ${type}`;
-
-        setTimeout(() => {
-            notification.classList.remove('show');
-        }, 4000);
-    }
-
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    function validatePhone(phone) {
-        const re = /^(0|\+84)[3|5|7|8|9][0-9]{8}$/;
-        return re.test(phone.replace(/\s/g, ''));
-    }
-
-    function checkPasswordStrength(password) {
-        let strength = 0;
-        const strengthBar = document.getElementById('passwordStrength');
-        const criteria = document.getElementById('passwordCriteria');
-
-        if (password.length >= 8) strength++;
-        if (/[a-z]/.test(password)) strength++;
-        if (/[A-Z]/.test(password)) strength++;
-        if (/[0-9]/.test(password)) strength++;
-        if (/[^A-Za-z0-9]/.test(password)) strength++;
-
-        strengthBar.className = 'password-strength';
-        if (strength > 0) {
-            if (strength <= 2) {
-                strengthBar.classList.add('weak');
-                criteria.innerHTML = 'Mật khẩu yếu';
-            } else if (strength <= 4) {
-                strengthBar.classList.add('medium');
-                criteria.innerHTML = 'Mật khẩu trung bình';
-            } else {
-                strengthBar.classList.add('strong');
-                criteria.innerHTML = 'Mật khẩu mạnh';
-            }
-        } else {
-            criteria.innerHTML = 'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt';
-        }
-    }
-
-    document.getElementById('password').addEventListener('input', function(e) {
-        checkPasswordStrength(e.target.value);
-    });
-
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const firstName = document.getElementById('firstName').value.trim();
-        const lastName = document.getElementById('lastName').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        const agreeTerms = document.getElementById('agreeTerms').checked;
-        const signupBtn = document.getElementById('signupBtn');
-
-        // Validation
-        if (!firstName || !lastName) {
-            showNotification('Vui lòng nhập đầy đủ họ và tên!', 'error');
-            return;
-        }
-
-        if (!validateEmail(email)) {
-            showNotification('Vui lòng nhập địa chỉ email hợp lệ!', 'error');
-            return;
-        }
-
-        if (!validatePhone(phone)) {
-            showNotification('Số điện thoại không hợp lệ!', 'error');
-            return;
-        }
-
-        if (username.length < 3) {
-            showNotification('Tên đăng nhập phải có ít nhất 3 ký tự!', 'error');
-            return;
-        }
-
-        if (password.length < 8) {
-            showNotification('Mật khẩu phải có ít nhất 8 ký tự!', 'error');
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            showNotification('Mật khẩu xác nhận không khớp!', 'error');
-            return;
-        }
-
-        if (!agreeTerms) {
-            showNotification('Vui lòng đồng ý với điều khoản dịch vụ!', 'error');
-            return;
-        }
-
-        // Show loading
-        signupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng ký...';
-        signupBtn.disabled = true;
-
-        // Simulate API call
-        setTimeout(() => {
-            showNotification('Đăng ký thành công! Chào mừng bạn đến với KAI RA Shop.');
-
-            // Redirect to login page after successful registration
-            setTimeout(() => {
-                window.location.href = '/login';
-            }, 2000);
-        }, 2000);
-    });
-
-    // Social signup handlers
-    document.querySelector('.social-btn.google').addEventListener('click', function() {
-        showNotification('Đang kết nối với Google...');
-    });
-
-    document.querySelector('.social-btn.facebook').addEventListener('click', function() {
-        showNotification('Đang kết nối với Facebook...');
-    });
-
-    // Phone number formatting
-    document.getElementById('phone').addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\D/g, '');
-        if (value.startsWith('84')) {
-            value = '0' + value.slice(2);
-        }
-        if (value.length <= 10) {
-            e.target.value = value;
-        }
-    });
-
-    // Check if username is available (simulated)
-    document.getElementById('username').addEventListener('blur', function() {
-        const username = this.value.trim();
-        if (username.length >= 3) {
-            // Simulate username availability check
-            setTimeout(() => {
-                if (username === 'admin' || username === 'user') {
-                    showNotification('Tên đăng nhập đã được sử dụng!', 'error');
-                }
-            }, 500);
-        }
-    });
-</script>
 
 </body>
 </html>

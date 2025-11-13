@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Contact - Cloth Shop</title>
     <style>
         body {
             font-family: 'Nunito', sans-serif;
-            margin: 0;
-            padding: 0;
             background-color: #F9F9F9;
             color: #333;
+            margin: 0;
+            padding: 0;
         }
 
         header {
-            background-color: #A8D5BA;
+            background-color: #cedcd3;
             padding: 20px 0;
             text-align: center;
             font-size: 1.8rem;
@@ -38,206 +38,88 @@
         }
 
         nav a:hover {
-            color: #4C9F70;
+            color: #161817;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 30px auto;
             padding: 0 20px;
         }
 
         h1 {
-            text-align: center;
             font-size: 2rem;
-            color: #4C9F70;
+            color: #161817;
             margin-bottom: 20px;
+            text-align: center;
         }
 
-        .contact-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 40px;
-            gap: 30px;
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
         .contact-info {
             background-color: #fff;
-            flex: 1 1 300px;
-            padding: 30px;
             border-radius: 12px;
+            padding: 25px;
             box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
         }
 
-        .contact-form {
+        .contact-info h3 {
+            margin-bottom: 15px;
+            color: #161817;
+        }
+
+        .contact-info p {
+            margin: 5px 0;
+        }
+
+        form {
             background-color: #fff;
-            flex: 1 1 400px;
-            padding: 30px;
             border-radius: 12px;
+            padding: 25px;
             box-shadow: 0 3px 12px rgba(0,0,0,0.08);
         }
 
-        .contact-form label {
+        form label {
             display: block;
-            margin: 15px 0 5px;
+            margin-top: 10px;
             font-weight: 600;
-            color: #4C9F70;
+            color: #161817;
         }
 
-        .contact-form input,
-        .contact-form textarea,
-        .contact-form select {
+        form input, form textarea {
             width: 100%;
-            padding: 12px 15px;
-            border-radius: 8px;
+            padding: 10px;
             border: 1px solid #ccc;
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.95rem;
-            transition: border-color 0.3s;
-        }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus,
-        .contact-form select:focus {
-            outline: none;
-            border-color: #4C9F70;
-            box-shadow: 0 0 0 2px rgba(76, 159, 112, 0.1);
-        }
-
-        .contact-form textarea {
-            resize: vertical;
-            height: 120px;
-        }
-
-        .contact-form button {
-            width: 100%;
-            padding: 14px;
-            background-color: #4C9F70;
-            color: white;
-            border: none;
             border-radius: 8px;
-            font-size: 1rem;
+            margin-top: 5px;
+            font-family: inherit;
+        }
+
+        form button {
+            margin-top: 20px;
+            background-color: #D7EAD9;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+            transition: background-color 0.2s;
         }
 
-        .contact-form button:hover {
-            background-color: #3a7c55;
+        form button:hover {
+            background-color: #b8d6b9;
         }
 
-        .contact-form button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 25px;
-            padding: 15px;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-        }
-
-        .info-item:hover {
-            background-color: #f0f7f2;
-        }
-
-        .info-item i {
-            color: #4C9F70;
-            margin-right: 15px;
-            font-size: 1.2rem;
-            width: 25px;
-            text-align: center;
-            margin-top: 3px;
-        }
-
-        .info-text h3 {
-            margin: 0 0 5px 0;
-            color: #333;
-            font-size: 1.1rem;
-        }
-
-        .info-text p {
-            margin: 0;
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        .store-hours {
+        .map {
             margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .store-hours h3 {
-            color: #4C9F70;
-            margin-bottom: 15px;
-        }
-
-        .hours-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            padding: 5px 0;
-        }
-
-        .hours-item .day {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .hours-item .time {
-            color: #666;
-        }
-
-        .map-container {
-            margin-top: 30px;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-        }
-
-        .map-placeholder {
-            background: linear-gradient(135deg, #A8D5BA, #4C9F70);
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            justify-content: center;
-        }
-
-        .social-link {
-            width: 40px;
-            height: 40px;
-            background: #4C9F70;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .social-link:hover {
-            background: #3a7c55;
-            transform: translateY(-2px);
         }
 
         footer {
@@ -246,278 +128,46 @@
             font-size: 0.9rem;
             color: #999;
             margin-top: 40px;
-            background-color: #D7EAD9;
+
         }
 
-        @media(max-width: 768px) {
-            .contact-container {
-                flex-direction: column;
+        @media(max-width: 600px) {
+            .container {
+                padding: 0 15px;
             }
-
-            .contact-info, .contact-form {
-                flex: 1 1 100%;
-            }
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #4C9F70;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.2);
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification.error {
-            background: #e74c3c;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 15px;
-        }
-
-        .form-row .form-group {
-            flex: 1;
-        }
-
-        .required::after {
-            content: " *";
-            color: #e74c3c;
         }
     </style>
 </head>
 <body>
 
-
 <div class="container">
-    <h1>Liên Hệ Với Chúng Tôi</h1>
+    <h1>Contact Us</h1>
+    <p>We’d love to hear from you! Whether you have a question about our products, orders, or partnerships, feel free to reach out to us using the details below or send us a message.</p>
 
-    <div class="contact-container">
-        <div class="contact-info">
-            <div class="info-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <div class="info-text">
-                    <h3>Địa chỉ cửa hàng</h3>
-                    <p>123 Đường Thời Trang, Quận 1, TP. Hồ Chí Minh</p>
-                </div>
-            </div>
+    <div class="contact-info">
 
-            <div class="info-item">
-                <i class="fas fa-phone"></i>
-                <div class="info-text">
-                    <h3>Điện thoại</h3>
-                    <p>+84 28 1234 5678</p>
-                    <p>Hotline: 1900 1234</p>
-                </div>
-            </div>
-
-            <div class="info-item">
-                <i class="fas fa-envelope"></i>
-                <div class="info-text">
-                    <h3>Email</h3>
-                    <p>contact@kaira.com</p>
-                    <p>support@kaira.com</p>
-                </div>
-            </div>
-
-            <div class="info-item">
-                <i class="fas fa-clock"></i>
-                <div class="info-text">
-                    <h3>Giờ làm việc</h3>
-                    <p>Thứ 2 - Chủ Nhật: 8:00 - 22:00</p>
-                </div>
-            </div>
-
-            <div class="store-hours">
-                <h3>Giờ mở cửa</h3>
-                <div class="hours-item">
-                    <span class="day">Thứ 2 - Thứ 6:</span>
-                    <span class="time">8:00 - 22:00</span>
-                </div>
-                <div class="hours-item">
-                    <span class="day">Thứ 7:</span>
-                    <span class="time">8:00 - 23:00</span>
-                </div>
-                <div class="hours-item">
-                    <span class="day">Chủ Nhật:</span>
-                    <span class="time">8:00 - 21:00</span>
-                </div>
-            </div>
-
-            <div class="social-links">
-                <a href="#" class="social-link" title="Facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" class="social-link" title="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" class="social-link" title="Zalo">
-                    <i class="fab fa-weixin"></i>
-                </a>
-                <a href="#" class="social-link" title="TikTok">
-                    <i class="fab fa-tiktok"></i>
-                </a>
-            </div>
-        </div>
-
-        <div class="contact-form">
-            <form id="contactForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="firstName" class="required">Họ</label>
-                        <input type="text" id="firstName" name="firstName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName" class="required">Tên</label>
-                        <input type="text" id="lastName" name="lastName" required>
-                    </div>
-                </div>
-
-                <label for="email" class="required">Email</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="phone">Số điện thoại</label>
-                <input type="tel" id="phone" name="phone">
-
-                <label for="subject" class="required">Chủ đề</label>
-                <select id="subject" name="subject" required>
-                    <option value="">Chọn chủ đề liên hệ</option>
-                    <option value="product">Thông tin sản phẩm</option>
-                    <option value="order">Tình trạng đơn hàng</option>
-                    <option value="return">Đổi trả hàng</option>
-                    <option value="complaint">Khiếu nại</option>
-                    <option value="cooperation">Hợp tác</option>
-                    <option value="other">Khác</option>
-                </select>
-
-                <label for="message" class="required">Nội dung tin nhắn</label>
-                <textarea id="message" name="message" placeholder="Xin vui lòng mô tả chi tiết yêu cầu của bạn..." required></textarea>
-
-                <button type="submit" id="submitBtn">
-                    <i class="fas fa-paper-plane"></i>
-                    Gửi tin nhắn
-                </button>
-            </form>
-        </div>
+        <p><strong>Address:</strong> 123 Fashion Street, District 1, Ho Chi Minh City, Vietnam</p>
+        <p><strong>Phone:</strong> +84 123 456 789</p>
+        <p><strong>Email:</strong> support@clothshop.com</p>
+        <p><strong>Working Hours:</strong> Mon - Sat: 9:00 AM - 8:00 PM</p>
     </div>
+
+    <form>
+        <h3 style="text-align:center;">Send Us a Message</h3>
+        <label for="name">Your Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+
+        <label for="email">Your Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="message">Message</label>
+        <textarea id="message" rows="5" placeholder="Write your message here..." required></textarea>
+
+        <button type="submit">Send Message</button>
+    </form>
+
+
 </div>
-
-
-
-<div class="notification" id="notification">
-    <span id="notificationMessage"></span>
-</div>
-
-<script>
-    function showNotification(message, type = 'success') {
-        const notification = document.getElementById('notification');
-        const messageEl = document.getElementById('notificationMessage');
-
-        messageEl.textContent = message;
-        notification.className = `notification show ${type}`;
-
-        setTimeout(() => {
-            notification.classList.remove('show');
-        }, 4000);
-    }
-
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    function validatePhone(phone) {
-        const re = /^(0|\+84)[3|5|7|8|9][0-9]{8}$/;
-        return re.test(phone.replace(/\s/g, ''));
-    }
-
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const firstName = document.getElementById('firstName').value.trim();
-        const lastName = document.getElementById('lastName').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const subject = document.getElementById('subject').value;
-        const message = document.getElementById('message').value.trim();
-        const submitBtn = document.getElementById('submitBtn');
-
-        // Validation
-        if (!firstName || !lastName) {
-            showNotification('Vui lòng nhập đầy đủ họ và tên!', 'error');
-            return;
-        }
-
-        if (!validateEmail(email)) {
-            showNotification('Vui lòng nhập địa chỉ email hợp lệ!', 'error');
-            return;
-        }
-
-        if (phone && !validatePhone(phone)) {
-            showNotification('Số điện thoại không hợp lệ!', 'error');
-            return;
-        }
-
-        if (!subject) {
-            showNotification('Vui lòng chọn chủ đề liên hệ!', 'error');
-            return;
-        }
-
-        if (!message) {
-            showNotification('Vui lòng nhập nội dung tin nhắn!', 'error');
-            return;
-        }
-
-        // Show loading
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
-        submitBtn.disabled = true;
-
-        // Simulate API call
-        setTimeout(() => {
-            showNotification('Cảm ơn bạn! Tin nhắn đã được gửi thành công. Chúng tôi sẽ phản hồi trong thời gian sớm nhất.');
-
-            // Reset form
-            document.getElementById('contactForm').reset();
-
-            // Reset button
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Gửi tin nhắn';
-            submitBtn.disabled = false;
-        }, 2000);
-    });
-
-    // Phone number formatting
-    document.getElementById('phone').addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\D/g, '');
-        if (value.startsWith('84')) {
-            value = '0' + value.slice(2);
-        }
-        if (value.length <= 10) {
-            e.target.value = value;
-        }
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Remove this in production - just for demo
-        setTimeout(() => {
-            document.getElementById('firstName').value = 'Nguyễn';
-            document.getElementById('lastName').value = 'Văn A';
-            document.getElementById('email').value = 'demo@email.com';
-            document.getElementById('phone').value = '0912345678';
-            document.getElementById('subject').value = 'product';
-            document.getElementById('message').value = 'Tôi muốn tìm hiểu thêm về sản phẩm mới của cửa hàng.';
-        }, 1000);
-    });
-</script>
 
 </body>
 </html>
