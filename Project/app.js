@@ -20,7 +20,7 @@ var adminRouter = require('./routes/admin');
 var shopRouter = require('./routes/shop');
 var usersRouter = require('./routes/users');
 const {Router} = require('express');
-
+// var testRouter = require('./routes/admin');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,6 +36,7 @@ app.use('/', indexRouter);
 app.use('/shop',shopRouter);
 app.use('/admin', adminRouter);
 app.use('/users', usersRouter);
+//app.use('/admin/test', testRouter);
 
 
 // catch 404 and forward to error handler

@@ -36,4 +36,5 @@ router.get('/signup', function(req, res, next) {
 router.get('/cart', function(req, res, next) {
     res.render('home/cart', { title: 'cart ' });
 });
+
 module.exports = router;

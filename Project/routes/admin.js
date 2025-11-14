@@ -20,4 +20,5 @@ router.get('/product', function(req, res, next) {
     res.render('admin/product/product-list', {title: 'Product'}) ;
 });
 
+
 module.exports = router;
