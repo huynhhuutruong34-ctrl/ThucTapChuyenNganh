@@ -19,6 +19,11 @@ router.get('/category', function(req, res, next) {
 router.get('/product', function(req, res, next) {
     res.render('admin/product/product-list', {title: 'Product'}) ;
 });
+router.get('/test', function(req, res, next) {
+    res.render('admin/test', {title: 'test'}) ;
+});
+
+
 
 
 module.exports = router;
