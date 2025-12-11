@@ -1,104 +1,137 @@
 var createError = require('http-errors');
 var express = require('express');
-const {engine}= require('express-handlebars');
+const { engine } = require('express-handlebars');
+const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport');
 var app = express();
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const session = require('express-session');
 app.engine(
     'hbs',
     engine( {
-    extname: '.hbs',
-    defaultLayout: 'layouts',
-    partialsDir: path.join(__dirname, 'views','partials'),
-    layoutsDir: path.join(__dirname, 'views', 'layouts'),
-})
+        extname: '.hbs',
+        defaultLayout: 'layouts',
+        partialsDir: path.join(__dirname, 'views', 'partials'),
+        layoutsDir: path.join(__dirname, 'views', 'layouts')
+    })
 );
 
+// Middleware session
+app.use(session({
+    secret: 'secret_key_for_session', // đổi thành gì đó bảo mật
+    resave: true,
+    saveUninitialized: true,
+    // cookie: { maxAge: 1000 * 60 * 60 } // 1 giờ
+}));
+app.use(flash());
+//PASSPORT
+app.use(passport.initialize());
+app.use(passport.session());
+
+// You might also need custom middleware to make flash messages available in templates
+app.use((req, res, next) => {
+    res.locals.user = req.user ? req.user.toObject() : null;
+    res.locals.success_message = req.flash('success_message');
+    res.locals.error_message = req.flash('error_message');
+    res.locals.error = req.flash('error'); // Passport.js often uses 'error'
+    res.locals.errors = req.flash('errors');
+    next();
+});
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
-var shopRouter = require('./routes/shop');
 var usersRouter = require('./routes/users');
-const {Router} = require('express');
-// var testRouter = require('./routes/admin');
-
+console.log(path.join(__dirname, 'views', 'layouts'));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// session middleware (simple setup — use env secrets in production)
-app.use(session({
-    secret: 'change_this_secret',
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 24 * 60 * 60 * 1000 }
-}));
-
-// expose session user to all views
-app.use((req, res, next) => {
-    res.locals.user = req.session.user || null;
-    next();
-});
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 app.use('/', indexRouter);
-app.use('/shop',shopRouter);
 app.use('/admin', adminRouter);
 app.use('/users', usersRouter);
-//app.use('/admin/test', testRouter);
 
-
-
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-//database connect
-
+//var shopRouter = require('./routes/shop');
 const mongoose = require('mongoose');
-const bcryptjs = require('bcryptjs');
-const User = require('./models/User');
 const bodyParser = require('body-parser');
+const {Strategy: LocalStrategy} = require("passport-local");
+const User = require('./models/User');
+const bcryptjs = require('bcryptjs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-mongoose.connect("mongodb://127.0.0.1/node")
-    .then(()=> {
-        console.log("MongoDB Connected successfully.   ");
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://127.0.0.1/node')
+    .then(()=>{
+        console.log("MongoDB connected successfully!");
     })
-    .catch((err)=> {
-        console.error("MongoDB Connected failed " , err);
+    .catch(err => {
+        console.error("Error connecting to MongDB:", err);
     });
 
 app.post('/login', (req, res) => {
-    User.findOne({ email: req.body.email }).then((user) => {
-        if (!user) {
-            return res.render('home/login', { error: 'Email không tồn tại' });
+    User.findOne({email: req.body.email}).then((user) => {
+        if (user) {
+            bcryptjs.compare(req.body.password,user.password,(err,matched)=>{
+                if(err) return err;
+                if(matched){
+                    //res.send("User was logged in");
+                    req.session.user =
+                        {
+                            id:user._id,
+                            email:user.email,
+                        };
+                    res.redirect('/');
+                }else {
+                    res.send("Email hoac mat khau khong dung");
+                }
+            });
+        }else{
+            res.send("User khong ton tai");
         }
-        bcryptjs.compare(req.body.password, user.password, (err, matched) => {
-            if (err) return res.render('home/login', { error: 'Lỗi xác thực' });
-            if (matched) {
-                // lưu thông tin user vào session
-                req.session.user = { id: user._id, email: user.email };
-                return res.redirect('/');
-            } else {
-                return res.render('home/login', { error: 'Mật khẩu không đúng' });
-            }
-        });
-    }).catch(err => res.render('error', { message: err.message }));
+    })
 });
+app.post('/signup', async (req, res) => {
+    try {
+        const { email, phone, password } = req.body;
+
+        // kiểm tra user đã tồn tại chưa
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "Email already registered" });
+        }
+
+        // hash password
+        const salt = await bcryptjs.genSalt(10);
+        const hashedPassword = await bcryptjs.hash(password, salt);
+
+        const newUser = new User({
+            email,
+            phone,
+            password: hashedPassword
+        });
+
+        await newUser.save();
+
+        // trả về thông tin user (không trả password)
+        const userData = {
+            email: newUser.email,
+            phone: newUser.phone
+        };
+
+        res.status(201).json({ message: "User registered", user: userData });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.post('/register',  (req,res) => {
         console.log(req.body);
         const newUser = new User();
@@ -120,16 +153,41 @@ app.post('/register',  (req,res) => {
     }
 );
 
-// logout route
 app.get('/logout', (req, res) => {
     req.session.destroy(err => {
+        if (err) {
+            console.error(err);
+            return res.redirect('/'); // nếu lỗi vẫn redirect về trang chính
+        }
+        // Xóa cookie session
         res.clearCookie('connect.sid');
-        return res.redirect('/');
+        // Sau đó redirect về login
+        res.redirect('/login');
     });
 });
+
+// view engine setup
+
+
+app.use((req, res, next) => {
+    res.locals.user = req.session.user || null;
+    next();
+});
+
 // catch 404 and forward to error handler
-app.use(function(req,
-                 res, next) {
+app.use(function(req, res, next) {
     next(createError(404));
 });
+
+// error handler
+app.use(function(err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+});
+
 module.exports = app;

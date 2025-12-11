@@ -102,7 +102,6 @@
         footer {
             text-align: center;
             padding: 15px;
-        s
             color: #666;
             font-size: 0.9rem;
         }
@@ -121,21 +120,66 @@
 <div class="signup-container">
     <div class="signup-box">
         <h2>Create Your Account</h2>
-        <form method="post" action="/register">
+        {{#if error_message}}
+            <div class="alert alert-danger">
+                {{error_message}}
+            </div>
+        {{/if}}
+        {{#if errors}}
+            {{#each errors}}
+                <div class="alert alert-danger">
+                    {{message}}
+                </div>
+            {{/each}}
+        {{/if}}
+        <form method="post" action="/signup">
             {{#if error}}
             <div style="color: #a94442; background:#f2dede; padding:10px; border-radius:6px; margin-bottom:12px">{{error}}</div>
             {{/if}}
-            <label for="fullname">Full Name</label>
-            <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+<!--            <label for="fullname">Full Name</label>-->
+<!--            <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>-->
 
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+<!--            <label for="email">Email Address</label>-->
+<!--            <input type="email" id="email" name="email" placeholder="Enter your email" required>-->
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+<!--            <label for="password">Password</label>-->
+<!--            <input type="password" id="password" name="password" placeholder="Enter your password" required>-->
 
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Confirm your password" required>
+<!--            <label for="confirm-password">Confirm Password</label>-->
+<!--            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Confirm your password" required>-->
+
+            <div class="form-group">
+                <div class="form-row text-start">
+                    <div class="md-3">
+                        <label for="exampleInputName">First name</label>
+                        <input value="{{firstName}}" name="firstName" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
+                    </div>
+                    <div class="md-3">
+                        <label for="exampleInputLastName">Last name</label>
+                        <input value="{{lastName}}" name="lastName" class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row text-start">
+                    <div class="md-3">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input value="{{email}}" name="email" class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row text-start">
+                    <div class="md-3">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
+                    </div>
+                    <div class="md-3">
+                        <label for="exampleConfirmPassword">Confirm password</label>
+                        <input name="password1" class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
+                    </div>
+                </div>
+            </div>
 
             <button type="submit">Sign Up</button>
 
