@@ -5,6 +5,7 @@ var app = express();
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const session = require('express-session');
 app.engine(
     'hbs',
     engine( {
@@ -30,6 +31,19 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+// session middleware (simple setup — use env secrets in production)
+app.use(session({
+    secret: 'change_this_secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 }
+}));
+
+// expose session user to all views
+app.use((req, res, next) => {
+    res.locals.user = req.session.user || null;
+    next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -69,22 +83,25 @@ mongoose.connect("mongodb://127.0.0.1/node")
     });
 
 app.post('/login', (req, res) => {
-    User.findOne({email: req.body.email}).then((user) => {
-        if (user) {
-            bcryptjs.compare(req.body.password,user.password,(err,matched)=>{
-                if(err) return err;
-                if(matched){
-                    res.send("User was logged in");
-                }else {
-                    res.send("User was not logged in");
-                }
-            })
+    User.findOne({ email: req.body.email }).then((user) => {
+        if (!user) {
+            return res.render('home/login', { error: 'Email không tồn tại' });
         }
-    })
+        bcryptjs.compare(req.body.password, user.password, (err, matched) => {
+            if (err) return res.render('home/login', { error: 'Lỗi xác thực' });
+            if (matched) {
+                // lưu thông tin user vào session
+                req.session.user = { id: user._id, email: user.email };
+                return res.redirect('/');
+            } else {
+                return res.render('home/login', { error: 'Mật khẩu không đúng' });
+            }
+        });
+    }).catch(err => res.render('error', { message: err.message }));
 });
 app.post('/register',  (req,res) => {
-    console.log(req.body);
-    const newUser = new User();
+        console.log(req.body);
+        const newUser = new User();
         newUser.email = req.body.email;
         newUser.password = req.body.password;
         bcryptjs.genSalt(10, function (err, salt) {
@@ -102,6 +119,14 @@ app.post('/register',  (req,res) => {
         });
     }
 );
+
+// logout route
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        res.clearCookie('connect.sid');
+        return res.redirect('/');
+    });
+});
 // catch 404 and forward to error handler
 app.use(function(req,
                  res, next) {

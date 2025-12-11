@@ -121,18 +121,21 @@
 <div class="signup-container">
     <div class="signup-box">
         <h2>Create Your Account</h2>
-        <form>
+        <form method="post" action="/register">
+            {{#if error}}
+            <div style="color: #a94442; background:#f2dede; padding:10px; border-radius:6px; margin-bottom:12px">{{error}}</div>
+            {{/if}}
             <label for="fullname">Full Name</label>
-            <input type="text" id="fullname" placeholder="Enter your full name" required>
+            <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
 
             <label for="email">Email Address</label>
-            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
             <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter your password" required>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
 
             <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Confirm your password" required>
 
             <button type="submit">Sign Up</button>
 
