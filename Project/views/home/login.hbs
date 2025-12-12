@@ -115,8 +115,10 @@
     <div class="login-box">
         <h2>Login </h2>
         <form method="post" action="/login">
-            {{#if error}}
-            <div style="color: #a94442; background:#f2dede; padding:10px; border-radius:6px; margin-bottom:12px">{{error}}</div>
+            {{#if success_message}}
+                <div class="alert alert-success">
+                    {{success_message}}
+                </div>
             {{/if}}
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
