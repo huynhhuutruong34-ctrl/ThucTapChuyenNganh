@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 const { engine } = require('express-handlebars');
+const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
@@ -17,7 +18,9 @@ app.engine(
         layoutsDir: path.join(__dirname, 'views', 'layouts')
     })
 );
-
+//method-override
+app.use(methodOverride('_method'));
+app.use(flash());
 // Middleware session
 app.use(session({
     secret: 'secret_key_for_session', // đổi thành gì đó bảo mật
@@ -42,7 +45,10 @@ app.use((req, res, next) => {
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
+var categoryRouter = require('./routes/category');
+
 console.log(path.join(__dirname, 'views', 'layouts'));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 
@@ -56,6 +62,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('public'));
 
 app.use('/', indexRouter);
+app.use('/admin/category', categoryRouter);
 app.use('/admin', adminRouter);
 app.use('/users', usersRouter);
 

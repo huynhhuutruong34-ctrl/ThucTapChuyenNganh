@@ -1,41 +1,39 @@
-
-<button class="btn btn-primary" type="submit">Thêm</button>
+<a href="/admin/category/create" class="btn btn-primary">
+    Add A Category
+</a>
 <br>
 <table class="table">
     <thead>
     <tr>
         <th scope="col">Stt</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">Name</th>
+        <th scope="col">Image</th>
+        <th scope="col">Status</th>
         <th scope="col">Edit</th>
         <th scope="col">Delete</th>
     </tr>
     </thead>
     <tbody class="table-group-divider">
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td><i class="fa-solid fa-pen-to-square text-warning"></i></td>
-        <td><i class="fa-solid fa-trash text-danger"></i></td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td><i class="fa-solid fa-pen-to-square text-warning"></i></td>
-        <td><i class="fa-solid fa-trash text-danger"></i></td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>John</td>
-        <td>Doe</td>
-        <td>@social</td>
-        <td><i class="fa-solid fa-pen-to-square text-warning"></i></td>
-        <td><i class="fa-solid fa-trash text-danger"></i></td>
-    </tr>
+    {{#each categories}}
+        <tr>
+            <th scope="row">{{stt}}</th>
+            <td>{{name}}</td>
+            <td><img src="{{image}}" alt="" class="img-thumbnail" width="100"> </td>
+            <td>{{status}}</td>
+            <td>
+                <a href="/admin/category/edit/{{_id}}">
+                    <i class="fa-solid fa-pen-to-square text-warning"></i>
+                </a>
+            </td>
+            <td>
+                <form action="/admin/category/{{_id}}?_method=DELETE" method="post">
+                    <button type="submit" class="border-0">
+                        <i class="fa-solid fa-trash-alt text-danger"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
+    {{/each}}
     </tbody>
+
 </table>

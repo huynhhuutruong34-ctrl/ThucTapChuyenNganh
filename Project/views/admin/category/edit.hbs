@@ -1,0 +1,50 @@
+<div class=" container-fluid">
+    <div class="card-body">
+        <div class="col-md-0">
+            <div class="card shadow-lg rounded-4">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Edit Category</h4>
+                </div>
+
+                <div class="card-body border-0">
+                    <form action="/admin/category/edit/{{category._id}}?_method=PUT" method="POST">
+
+                        <!-- Name -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input name="name" value="{{category.name}}" type="text" class="form-control" id="name">
+                        </div>
+
+                        <!-- Image -->
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image</label>
+                            <input name="image" value="{{category.image}}" type="text" class="form-control" id="image">
+                        </div>
+
+                        <!-- Status -->
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" class="form-control" id="status">
+                                {{#if category.status}}
+                                    <option value="true" selected>Active</option>
+                                    <option value="false" >Inactive</option>
+                                {{else}}
+                                    <option value="true" >Active</option>
+                                    <option value="false" selected>Inactive</option>
+                                {{/if}}
+                            </select>
+                        </div>
+                        <!-- Buttons -->
+                        <button type="submit" class="btn btn-primary">Edit A Category</button>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

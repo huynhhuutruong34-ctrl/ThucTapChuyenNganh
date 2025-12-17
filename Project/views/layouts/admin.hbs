@@ -32,15 +32,9 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="admin/index">
                     <i class="fa fa-fw fa-dashboard"></i>
-                    <span class="nav-link-text">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-                <a class="nav-link" href="charts.html">
-                    <i class="fa fa-fw fa-area-chart"></i>
-                    <span class="nav-link-text">Charts</span>
+                    <span href="admin/index" class="nav-link-text">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
@@ -49,24 +43,10 @@
                     <span class="nav-link-text">Tables</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-                    <i class="fa fa-fw fa-wrench"></i>
-                    <span class="nav-link-text">Components</span>
-                </a>
-                <ul class="sidenav-second-level collapse" id="collapseComponents">
-                    <li>
-                        <a href="navbar.html">Navbar</a>
-                    </li>
-                    <li>
-                        <a href="cards.html">Cards</a>
-                    </li>
-                </ul>
-            </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-file"></i>
-                    <span class="nav-link-text">Example Pages</span>
+                    <span class="nav-link-text">Pages</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseExamplePages">
                     <li>
@@ -120,14 +100,8 @@
                     <span class="nav-link-text">Link</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-                <a class="nav-link" href="/admin/test">
-                    <i class="fa fa-fw fa-link"></i>
-                    <span class="nav-link-text">Test</span>
-                </a>
-            </li>
-
         </ul>
+
         <ul class="navbar-nav sidenav-toggler">
             <li class="nav-item">
                 <a class="nav-link text-center" id="sidenavToggler">
@@ -143,7 +117,7 @@
                   <span class="badge badge-pill badge-primary">12 New</span>
                 </span>
                     <span class="indicator text-primary d-none d-lg-block">
-                  <i class="fa fa-fw fa-circle"></i>
+<i class="fa fa-fw fa-circle"></i>
                 </span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="messagesDropdown">
@@ -230,7 +204,6 @@
                     <i class="fa fa-fw fa-user"></i>{{user.firstName}} <i class="fa fa-fw fa-sign-out"></i>Logout
                 </a>
             </li>
-
         </ul>
     </div>
 </nav>
@@ -261,7 +234,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="/login">Logout</a>
+                    <a class="btn btn-primary" href="/logout">Logout</a>
                 </div>
             </div>
         </div>
@@ -275,7 +248,7 @@
     <script src="/vendor/chart.js/Chart.min.js"></script>
     <script src="/vendor/datatables/jquery.dataTables.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
-    <!-- Custom scripts for all pages-->
+    <!-- Custom scripts for all pages.hbs-->
     <script src="/js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="/js/sb-admin-datatables.min.js"></script>

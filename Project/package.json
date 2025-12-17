@@ -18,6 +18,7 @@
     "flash": "^1.1.0",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
+    "method-override": "^3.0.0",
     "mongo": "^0.1.0",
     "mongodb": "^7.0.0",
     "mongoose": "^9.0.0",
