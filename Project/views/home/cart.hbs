@@ -1,188 +1,151 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - Cloth Shop</title>
-    <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #F9F9F9;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
+<link rel="stylesheet" href="/css/style.css">
 
-        header {
-            background-color: #cedcd3;
-            padding: 20px 0;
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: white;
-        }
+<div class="cart-page">
 
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .cart-list {
-            background-color: #fff;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .cart-item:last-child {
-            border-bottom: none;
-        }
-
-        .item-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .item-info img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .item-info div {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .item-info div h4 {
-            margin: 0 0 5px 0;
-            font-size: 1rem;
-        }
-
-        .item-info div p {
-            margin: 0;
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        .item-price {
-            font-weight: 600;
-            color: #161817;
-        }
-
-        .total {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .checkout-btn {
-            display: block;
-            width: 100%;
-            margin-top: 25px;
-            padding: 12px;
-            background-color: #D7EAD9;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .checkout-btn:hover {
-            background-color: #b8d6b9;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 40px;
-        }
-
-        @media(max-width: 600px) {
-            .cart-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            .item-info {
-                flex-direction: row;
-                gap: 10px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-
-<div class="container">
-    <h1>Your Cart</h1>
-
-    <div class="cart-list">
-        <div class="cart-item">
-            <div class="item-info">
-                <img src="images/11.jpg" alt="Denim Jacket">
-                <div>
-                    <h4>Men’s Denim Jacket</h4>
-                    <p>Size: M | Color: Blue</p>
-                </div>
-            </div>
-            <div class="item-price">$79</div>
+    <!-- CART LIST -->
+    <div class="cart-container">
+        <h2 class="cart-title">Giỏ hàng của bạn</h2>
+        <div id="cart-list"></div>
+        <div class="cart-summary-box">
+            <span>Tổng cộng:</span>
+            <span id="cart-total">0₫</span>
         </div>
-
-        <div class="cart-item">
-            <div class="item-info">
-                <img src="images/12.jpg" alt="White T-shirt">
-                <div>
-                    <h4>Classic White T-shirt</h4>
-                    <p>Size: L | Color: White</p>
-                </div>
-            </div>
-            <div class="item-price">$29</div>
-        </div>
-
-        <div class="cart-item">
-            <div class="item-info">
-                <img src="images/13.jpg" alt="Leather Handbag">
-                <div>
-                    <h4>Leather Handbag</h4>
-                    <p>Color: Brown</p>
-                </div>
-            </div>
-            <div class="item-price">$129</div>
-        </div>
-
-        <div class="total">
-            <span>Total:</span>
-            <span>$237</span>
-        </div>
-
-        <button class="checkout-btn">Proceed to Checkout</button>
     </div>
+
+    <!-- ORDER INFO -->
+    <div class="checkout-container">
+        <h3>Thông tin đặt hàng</h3>
+
+        <div class="checkout-form">
+            <input type="text" placeholder="Họ và tên" required>
+            <input type="text" placeholder="Số điện thoại" required>
+            <input type="text" placeholder="Địa chỉ giao hàng" required>
+
+            <select>
+                <option selected disabled>Phương thức thanh toán</option>
+                <option>Thanh toán khi nhận hàng (COD)</option>
+                <option>Chuyển khoản ngân hàng</option>
+            </select>
+        </div>
+
+        <button class="btn-order" id="btn-order">Đặt hàng</button>
+        <button class="btn-back" onclick="window.location.href='/shop'">← Quay lại shop</button>
+    </div>
+
 </div>
 
+<script>
+    const cartList = document.getElementById("cart-list");
+    const btnOrder = document.getElementById("btn-order");
+    const cartTotal = document.getElementById("cart-total");
 
-</body>
-</html>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function saveCart() {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function renderCart() {
+        if (cart.length === 0) {
+            cartList.innerHTML = "<p class='empty-cart'>Giỏ hàng đang trống.</p>";
+            cartTotal.innerText = "0₫";
+            return;
+        }
+
+        cartList.innerHTML = "";
+        let totalAll = 0;
+
+        cart.forEach((item, index) => {
+            const totalPrice = item.price * item.qty;
+            totalAll += totalPrice;
+
+            cartList.innerHTML += `
+                <div class="cart-item">
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="cart-info">
+                        <h4>${item.name}</h4>
+                        <p>Giá: ${Number(item.price).toLocaleString()}₫</p>
+                        <div class="quantity-control">
+                            <button class="decrease" data-index="${index}">-</button>
+                            <span>${item.qty}</span>
+                            <button class="increase" data-index="${index}">+</button>
+                        </div>
+                    </div>
+                    <div class="cart-right">
+                        <p class="cart-item-total">Tổng: ${totalPrice.toLocaleString()}₫</p>
+                        <button class="btn-delete" data-index="${index}">Xóa</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        cartTotal.innerText = totalAll.toLocaleString() + "₫";
+        attachEvents();
+    }
+
+    function attachEvents() {
+        document.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.onclick = () => {
+                cart.splice(btn.dataset.index, 1);
+                saveCart();
+                renderCart();
+            };
+        });
+
+        document.querySelectorAll('.increase').forEach(btn => {
+            btn.onclick = () => {
+                cart[btn.dataset.index].qty++;
+                saveCart();
+                renderCart();
+            };
+        });
+
+        document.querySelectorAll('.decrease').forEach(btn => {
+            btn.onclick = () => {
+                if (cart[btn.dataset.index].qty > 1) {
+                    cart[btn.dataset.index].qty--;
+                    saveCart();
+                    renderCart();
+                }
+            };
+        });
+    }
+
+    btnOrder.onclick = async () => {
+        if(cart.length === 0){
+            alert("Giỏ hàng đang trống!");
+            return;
+        }
+
+        const customer = {
+            name: document.querySelector('input[placeholder="Họ và tên"]').value.trim(),
+            phone: document.querySelector('input[placeholder="Số điện thoại"]').value.trim(),
+            address: document.querySelector('input[placeholder="Địa chỉ giao hàng"]').value.trim(),
+            payment: document.querySelector('select').value
+        };
+
+        if(!customer.name || !customer.phone || !customer.address || customer.payment.includes("Phương thức")){
+            alert("Vui lòng nhập đầy đủ thông tin");
+            return;
+        }
+
+        const response = await fetch('/order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ customer, items: cart })
+        });
+
+        const data = await response.json();
+
+        if(data.success){
+            // Xóa cart localStorage
+            localStorage.removeItem('cart');
+            window.location.href = `/bill/${data.orderId}`; // chuyển sang hóa đơn
+        } else {
+            alert("Lỗi đặt hàng: " + data.error);
+        }
+    };
+
+
+    renderCart();
+</script>

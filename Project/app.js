@@ -1,7 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
+const methodOverride = require('method-override')
 const { engine } = require('express-handlebars');
-const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
@@ -9,18 +9,30 @@ var app = express();
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-app.engine(
-    'hbs',
-    engine( {
-        extname: '.hbs',
-        defaultLayout: 'layouts',
-        partialsDir: path.join(__dirname, 'views', 'partials'),
-        layoutsDir: path.join(__dirname, 'views', 'layouts')
-    })
-);
-//method-override
-app.use(methodOverride('_method'));
-app.use(flash());
+
+
+app.engine('hbs', engine({
+    extname: '.hbs',
+    defaultLayout: 'layouts',
+    partialsDir: path.join(__dirname, 'views/partials'),
+    layoutsDir: path.join(__dirname, 'views/layouts'),
+    helpers: {
+        eq: (a, b) =>{a === b} ,
+        // tính tổng tiền 1 sản phẩm
+        calcTotal: (price, qty) => {
+            return (price * qty).toLocaleString() + '₫';
+        },
+        // format tổng tiền
+        formatPrice: (price) => {
+            return Number(price).toLocaleString() + '₫';
+        }
+    }
+}));
+
+
+app.set('view engine', 'hbs');
+
+
 // Middleware session
 app.use(session({
     secret: 'secret_key_for_session', // đổi thành gì đó bảo mật
@@ -28,6 +40,8 @@ app.use(session({
     saveUninitialized: true,
     // cookie: { maxAge: 1000 * 60 * 60 } // 1 giờ
 }));
+//methor override
+app.use(methodOverride('_method'));
 app.use(flash());
 //PASSPORT
 app.use(passport.initialize());
@@ -42,13 +56,13 @@ app.use((req, res, next) => {
     res.locals.errors = req.flash('errors');
     next();
 });
+
+
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
 var categoryRouter = require('./routes/category');
-
 console.log(path.join(__dirname, 'views', 'layouts'));
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 
@@ -66,11 +80,12 @@ app.use('/admin/category', categoryRouter);
 app.use('/admin', adminRouter);
 app.use('/users', usersRouter);
 
+
 //var shopRouter = require('./routes/shop');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const {Strategy: LocalStrategy} = require("passport-local");
-const User = require('./models/User');
+const User = require('./models/user');
 const bcryptjs = require('bcryptjs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -172,6 +187,43 @@ app.get('/logout', (req, res) => {
         res.redirect('/login');
     });
 });
+const Order = require('./models/Order');
+
+// POST tạo order
+app.post('/order', async (req,res) => {
+    try{
+        const { customer, items } = req.body;
+        if(!customer || !items || items.length === 0)
+            return res.status(400).json({ error: "Dữ liệu không hợp lệ" });
+
+        const total = items.reduce((sum,i)=> sum + i.price*i.qty, 0);
+
+        const order = new Order({ customer, items, total });
+        await order.save();
+
+        res.json({ success:true, orderId: order._id });
+    } catch(err){
+        console.error(err);
+        res.status(500).json({ error: "Lỗi server" });
+    }
+});
+
+// GET hiển thị bill theo order ID
+app.get('/bill/:id', async (req,res) => {
+    try {
+        const order = await Order.findById(req.params.id).lean();
+        if(!order) return res.status(404).send("Không tìm thấy hóa đơn");
+
+        res.render('bill', { order });
+    } catch(err) {
+        console.error(err);
+        res.status(500).send("Lỗi server");
+    }
+});
+
+
+
+
 
 // view engine setup
 
@@ -180,6 +232,10 @@ app.use((req, res, next) => {
     res.locals.user = req.session.user || null;
     next();
 });
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {{!-- CSS chung --}}
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- SHOP -->
+<section class="shop-section">
+    <div class="product-row">
+
+        {{#each products}}
+            <div class="product-card">
+                <img src="{{image}}" alt="{{name}}">
+
+                <div class="product-info">
+                    <p class="product-title">{{name}}</p>
+
+                    <p class="product-price">{{price}}₫</p>
+
+                    <button
+                            class="btn-add-cart"
+                            data-login="{{#if ../user}}true{{else}}false{{/if}}"
+                            data-name="{{name}}"
+                            data-price="{{price}}"
+                            data-img="{{image}}">
+                        Buy now
+                    </button>
+                </div>
+            </div>
+        {{/each}}
+
+    </div>
+</section>
+
+<script>
+    /* ===== CẬP NHẬT ICON CART ===== */
+    function updateCartIcon() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+        const badge = document.getElementById('cart-count');
+
+        if (!badge) return;
+
+        if (totalQty > 0) {
+            badge.innerText = totalQty;
+            badge.style.display = 'inline-block';
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+
+    /* ===== BUY NOW ===== */
+    document.querySelectorAll('.btn-add-cart').forEach(btn => {
+        btn.addEventListener('click', () => {
+
+            // CHƯA LOGIN
+            if (btn.dataset.login !== 'true') {
+                alert('Vui lòng đăng nhập hoặc đăng ký để mua hàng');
+                window.location.href = '/login';
+                return;
+            }
+
+            // ĐÃ LOGIN
+            const product = {
+                name: btn.dataset.name,
+                price: Number(btn.dataset.price),
+                img: btn.dataset.img,
+                qty: 1
+            };
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            const exist = cart.find(
+                    item => item.name === product.name && item.img === product.img
+            );
+
+            if (exist) {
+                exist.qty += 1;
+            } else {
+                cart.push(product);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // CẬP NHẬT ICON NGAY
+            updateCartIcon();
+        });
+    });
+
+    // load lại icon khi refresh trang
+    document.addEventListener('DOMContentLoaded', updateCartIcon);
+</script>
+
+</body>
+</html>

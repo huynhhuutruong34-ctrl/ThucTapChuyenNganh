@@ -57,6 +57,10 @@
 
                             </li>
                             <li class="nav-item ">
+                                <a href="/shop" class="nav-item nav-link"  >Shop </a>
+
+                            </li>
+                            <li class="nav-item ">
                                 <a href="/contact" class="nav-item nav-link"  >Contact</a>
 
                             </li>
@@ -104,6 +108,24 @@
 </nav>
 
 {{{body}}}
+<script>
+    function updateCartIcon() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+        const badge = document.getElementById('cart-count');
+
+        if (!badge) return;
+
+        if (totalQty > 0) {
+            badge.innerText = totalQty;
+            badge.style.display = 'inline-block';
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', updateCartIcon);
+</script>
 
 <footer id="footer" class="mt-5">
     <div class="container">

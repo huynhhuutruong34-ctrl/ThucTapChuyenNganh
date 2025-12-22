@@ -32,7 +32,8 @@ router.post('/create', function(req, res) {
     const newCategory = new Category({
         name: req.body.name,
         image: req.body.image.trim(),
-        status: req.body.status === 'true'
+        status: req.body.status === 'true',
+        price:req.body.price
     });
 
     newCategory.save()
@@ -46,16 +47,22 @@ router.get('/edit/:id', function(req, res) {
             {title: 'Edit Category', category: category.toObject()});
     })
 });
-router.put('/edit/:id', function(req, res) {
-    Category.findOne({_id: req.params.id}).then((category) => {
-        category.name = req.body.name;
-        category.image = req.body.image.trim();
-        category.status = req.body.status === 'true';
-        category.save().then ( savecategory => {
-            res.redirect('/admin/category');
-        })
-    })
+router.put('/edit/:id', async (req, res) => {
+    try {
+        await Category.findByIdAndUpdate(req.params.id, {
+            name: req.body.name,
+            image: req.body.image,
+            price: req.body.price,
+            status: req.body.status === 'true'
+        });
+
+        res.redirect('/admin/category');
+    } catch (err) {
+        console.log(err);
+        res.send('Update failed');
+    }
 });
+
 router.delete('/:id', async (req, res) => {
     try {
         await Category.findByIdAndDelete(req.params.id);

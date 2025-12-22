@@ -1,0 +1,157 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 20px;
+    }
+
+    .order-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .order-container h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .filter-menu {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .filter-menu button {
+        margin: 0 5px;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .order-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .order-item {
+        border: 1px solid #ddd;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        transition: box-shadow 0.2s;
+    }
+
+    .order-item:hover {
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .order-item strong {
+        color: #555;
+    }
+
+    .order-status {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 5px;
+        font-size: 0.9em;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .order-status.pending { background-color: #f0ad4e; }
+    .order-status.completed { background-color: #5cb85c; }
+    .order-status.cancelled { background-color: #d9534f; }
+
+    .order-status-select {
+        margin-left: 10px;
+        padding: 3px 6px;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="order-container">
+    <h2>Danh sách đơn hàng</h2>
+
+    <!-- Menu lọc trạng thái -->
+    <div class="filter-menu">
+        <button class="filter-btn" data-status="all">All</button>
+        <button class="filter-btn" data-status="pending">Pending</button>
+        <button class="filter-btn" data-status="completed">Completed</button>
+        <button class="filter-btn" data-status="cancelled">Cancelled</button>
+    </div>
+
+    {{#if orders.length}}
+        <ul class="order-list" id="order-list">
+            {{#each orders}}
+                <li class="order-item" data-status="{{this.status}}">
+                    <p><strong>Khách hàng:</strong> {{this.customer.name}}</p>
+                    <p><strong>Phone:</strong> {{this.customer.phone}}</p>
+                    <p><strong>Địa chỉ:</strong> {{this.customer.address}}</p>
+                    <p><strong>Tổng tiền:</strong> {{this.total}}₫</p>
+                    <p><strong>Thanh toán:</strong> {{this.customer.payment}}</p>
+                    <p>
+                        <strong>Trạng thái:</strong>
+                        <span class="order-status {{this.status}}" id="status-label-{{this._id}}">
+                            {{this.status}}
+                        </span>
+                        <select class="order-status-select" data-id="{{this._id}}">
+                            <option value="pending" {{#if (eq this.status "pending")}}selected{{/if}}>Pending</option>
+                            <option value="completed" {{#if (eq this.status "completed")}}selected{{/if}}>Completed</option>
+                            <option value="cancelled" {{#if (eq this.status "cancelled")}}selected{{/if}}>Cancelled</option>
+                        </select>
+                    </p>
+                    <p><strong>Ngày đặt:</strong> {{this.createdAt}}</p>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>Chưa có đơn hàng nào.</p>
+    {{/if}}
+</div>
+
+<script>
+    // Thay đổi trạng thái đơn hàng
+    document.querySelectorAll('.order-status-select').forEach(select => {
+        select.addEventListener('change', async () => {
+            const orderId = select.dataset.id;
+            const newStatus = select.value;
+
+            const res = await fetch('/admin/order/update-status', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ orderId, status: newStatus })
+            });
+
+            const data = await res.json();
+            if(data.success){
+                const label = document.getElementById('status-label-' + orderId);
+                label.innerText = data.status;
+                label.className = 'order-status ' + data.status;
+                // đồng thời cập nhật data-status để filter vẫn chính xác
+                select.closest('.order-item').dataset.status = data.status;
+            } else {
+                alert('Cập nhật thất bại: ' + data.error);
+            }
+        });
+    });
+
+    // Lọc đơn hàng theo trạng thái
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const status = btn.dataset.status;
+            document.querySelectorAll('.order-item').forEach(item => {
+                if(status === 'all' || item.dataset.status === status){
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>

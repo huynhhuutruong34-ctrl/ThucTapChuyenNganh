@@ -1,0 +1,72 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        margin: 0;
+        padding: 0;
+    }
+
+    .bill-container {
+        max-width: 700px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+
+    .bill-title {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .customer-info p {
+        margin: 5px 0;
+    }
+
+    .items-list {
+        list-style: none;
+        padding: 0;
+        margin: 15px 0;
+    }
+
+    .items-list li {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .total {
+        text-align: right;
+        margin-top: 20px;
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #000;
+    }
+</style>
+
+<div class="bill-container">
+    <h2 class="bill-title">Hóa đơn đặt hàng</h2>
+
+    <div class="customer-info">
+        <p><strong>Khách hàng:</strong> {{order.customer.name}}</p>
+        <p><strong>Phone:</strong> {{order.customer.phone}}</p>
+        <p><strong>Địa chỉ:</strong> {{order.customer.address}}</p>
+        <p><strong>Thanh toán:</strong> {{order.customer.payment}}</p>
+        <p><strong>Ngày đặt:</strong> {{order.createdAt}}</p>
+    </div>
+
+    <h3>Danh sách sản phẩm:</h3>
+    <ul class="items-list">
+        {{#each order.items}}
+            <li>
+                <span>{{name}} x {{qty}}</span>
+                <span>{{calcTotal price qty}}</span>
+            </li>
+        {{/each}}
+    </ul>
+
+    <h3 class="total">Tổng tiền: {{formatPrice order.total}}</h3>
+</div>

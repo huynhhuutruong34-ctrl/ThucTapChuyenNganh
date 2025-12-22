@@ -1,45 +1,82 @@
-<div class=" container-fluid">
-    <div class="card-body">
-        <div class="col-md-0">
-            <div class="card shadow-lg rounded-4">
-                <div class="card-header bg-primary text-white text-center">
-                    <h4>Add Category</h4>
+<style>
+    /* ÉP FULL WIDTH CHO SB ADMIN */
+    .container,
+    .container-fluid {
+        max-width: 100% !important;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .card {
+        max-width: 100% !important;
+        width: 100%;
+    }
+</style>
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h4 class="mb-0">Add Category</h4>
                 </div>
 
-                <div class="card-body border-0">
+                <div class="card-body px-5 py-4">
                     <form action="/admin/category/create" method="POST">
 
-                        <!-- Name -->
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input name="name" type="text" class="form-control" id="name">
+                        <!-- NAME -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Name</label>
+                            <input
+                                    type="text"
+                                    name="name"
+                                    class="form-control form-control-lg"
+                                    placeholder="Nhập tên sản phẩm"
+                                    required>
                         </div>
 
-                        <!-- Image -->
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Image</label>
-                            <input name="image" type="text" class="form-control" id="image">
+                        <!-- IMAGE -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Image URL</label>
+                            <input
+                                    type="text"
+                                    name="image"
+                                    class="form-control form-control-lg"
+                                    placeholder="https://..."
+                                    required>
                         </div>
 
-                        <!-- Status -->
-                        <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select name="status" class="form-control" id="status">
-                                <option value="false" selected>Inactive</option>
-                                <option value="true">Active</option>
+                        <!-- PRICE -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Price (VND)</label>
+                            <input
+                                    type="number"
+                                    name="price"
+                                    class="form-control form-control-lg"
+                                    placeholder="VD: 150000"
+                                    required>
+                        </div>
+
+                        <!-- STATUS -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Status</label>
+                            <select name="status" class="form-select form-select-lg">
+                                <option value="true" selected>Active</option>
+                                <option value="false">Inactive</option>
                             </select>
                         </div>
-                        <!-- Buttons -->
-                        <button type="submit" class="btn btn-primary">Add A Category</button>
 
+                        <!-- BUTTON -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Add Category
+                            </button>
+                        </div>
                     </form>
                 </div>
-
             </div>
 
         </div>
     </div>
 </div>
-
-</body>
-</html>

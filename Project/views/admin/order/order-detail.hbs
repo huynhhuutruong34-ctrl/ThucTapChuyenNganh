@@ -1,0 +1,46 @@
+<h2>Chi tiết Order: {{order._id}}</h2>
+
+<h3>Khách hàng: {{order.customer.name}}</h3>
+<p>Phone: {{order.customer.phone}}</p>
+<p>Địa chỉ: {{order.customer.address}}</p>
+<p>Thanh toán: {{order.customer.payment}}</p>
+<p>Ngày đặt: {{order.createdAt}}</p>
+
+<h4>Danh sách sản phẩm:</h4>
+<ul>
+    {{#each order.items}}
+        <li>{{name}} x {{qty}} - {{price}}₫</li>
+    {{/each}}
+</ul>
+
+<h3>Tổng tiền: {{order.total}}₫</h3>
+
+<p>
+    <strong>Trạng thái:</strong>
+    <select id="status-select">
+        <option value="pending" {{#if (eq order.status "pending")}}selected{{/if}}>Pending</option>
+        <option value="completed" {{#if (eq order.status "completed")}}selected{{/if}}>Completed</option>
+        <option value="cancelled" {{#if (eq order.status "cancelled")}}selected{{/if}}>Cancelled</option>
+    </select>
+</p>
+
+<script>
+    document.getElementById('status-select').addEventListener('change', async (e) => {
+        const newStatus = e.target.value;
+        const orderId = "{{order._id}}";
+
+        const res = await fetch(`/admin/order/${orderId}/status`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: newStatus })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            alert("Cập nhật trạng thái thành công: " + data.status);
+            location.reload(); // reload để hiển thị status mới
+        } else {
+            alert("Cập nhật thất bại: " + data.error);
+        }
+    });
+</script>
