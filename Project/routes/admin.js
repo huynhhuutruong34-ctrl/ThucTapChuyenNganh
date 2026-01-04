@@ -4,6 +4,9 @@ const Category = require('../models/category');
 const Product = require('../models/product');
 const User = require('../models/user');
 const Order = require('../models/Order');
+const Contact = require('../models/contact');
+const Setting = require('../models/setting');
+
 
 function useAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -12,10 +15,10 @@ function useAuthenticated(req, res, next) {
         res.redirect('/login'); // Redirect to login if authentication fails
     }
 }
-// router.all('/*', useAuthenticated, (req, res, next) => {
-//     res.app.locals.layout = 'admin'; // Set layout for admin pages
-//     next();
-// });
+router.all('/*', useAuthenticated, (req, res, next) => {
+    res.app.locals.layout = 'admin'; // Set layout for admin pages
+    next();
+});
 /* GET home page. */
 router.get('/*', function(
     req,
@@ -25,9 +28,9 @@ router.get('/*', function(
     next();
 });
 
-
-
-
+router.get('/', function(req, res, next) {
+    res.render('admin/index', {title: 'Admin'}) ;
+});
 
 /* DASHBOARD */
 router.get('/', async (req, res) => {
@@ -64,36 +67,64 @@ router.get('/', async (req, res) => {
 });
 
 // Route hiển thị danh sách sản phẩm từ categories
-router.get('/product', async (req,res)=>{
-    try{
-        // Lấy tất cả sản phẩm từ products
-        let products = await Product.find().lean();
+router.get('/product', async (req, res) => {
+    try {
+        await syncProductsFromCategories();
 
-        // Nếu products chưa có, fallback lấy từ categories
-        if(products.length === 0){
-            const categories = await Category.find().lean();
-            products = categories.map(cat => ({
-                _id: cat._id,
-                name: cat.name,
-                price: cat.price,
-                qty: cat.qty || 0,
-                image: cat.image
-            }));
-        }
-
-        const totalValue = products.reduce((acc,item)=> acc + (item.price * item.qty), 0);
-        const totalQty = products.reduce((acc,item)=> acc + item.qty, 0);
+        const products = await Product.find().lean();
+        const totalValue = products.reduce((acc, item) => acc + (item.price * item.qty), 0);
+        const totalQty = products.reduce((acc, item) => acc + item.qty, 0);
 
         res.render('admin/product/product-list', {
             products,
             totalValue,
             totalQty
         });
-    }catch(err){
+    } catch (err) {
         console.error(err);
         res.status(500).send('Server Error');
     }
 });
+
+
+async function syncProductsFromCategories() {
+    const categories = await Category.find().lean();
+    const products = await Product.find().lean();
+
+    const categoryIds = categories.map(c => c._id.toString());
+    const productIds = products.map(p => p._id.toString());
+
+    // --- Thêm Product mới từ Category ---
+    for (const cat of categories) {
+        if (!productIds.includes(cat._id.toString())) {
+            const product = new Product({
+                _id: cat._id,
+                name: cat.name,
+                price: cat.price || 0,
+                qty: cat.qty || 0,
+                image: cat.image || '',
+                description: cat.description || ''
+            });
+            await product.save();
+        } else {
+            // --- Cập nhật Product nếu Category thay đổi ---
+            await Product.findByIdAndUpdate(cat._id, {
+                name: cat.name,
+                price: cat.price || 0,
+                image: cat.image || '',
+                description: cat.description || ''
+            });
+        }
+    }
+
+    // --- Xóa Product nếu Category đã bị xóa ---
+    for (const prod of products) {
+        if (!categoryIds.includes(prod._id.toString())) {
+            await Product.findByIdAndDelete(prod._id);
+        }
+    }
+}
+
 
 
 // Route chuyển category thành product và lưu vào products
@@ -195,13 +226,6 @@ router.post('/product/update-qty-ajax', async (req, res) => {
     }
 });
 
-
-
-
-
-
-
-
 /* CREATE ORDER */
 router.post('/', async (req,res)=>{
     console.log('req.body:', req.body);
@@ -223,8 +247,7 @@ router.post('/', async (req,res)=>{
     }
 });
 
-/* LIST ORDERS */
-// routes/admin.js
+
 // routes/admin.js
 router.get('/order', async (req, res) => {
     try {
@@ -278,6 +301,67 @@ router.post('/order/:id/status', async (req, res) => {
         res.status(500).json({ success: false, error: 'Không cập nhật được' });
     }
 });
+router.get('/contact/contact-message', async (req, res) => {
+    try {
+        const contacts = await Contact.find().lean();
+        res.render('admin/contact/contact-message', {
+            contacts
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+});
+
+// GET contact setting
+router.get('/settings/contact-setting', async (req, res) => {
+    const setting = await Setting.findOne().lean();
+    res.render('admin/settings/contact-setting', { setting });
+});
+
+// POST contact setting  BẮT SAVE
+router.post('/settings/contact-setting', async (req, res) => {
+    console.log('POST CONTACT SETTING:', req.body); //  TEST
+
+    await Setting.findOneAndUpdate(
+        {},
+        req.body,
+        { upsert: true }
+    );
+
+    res.redirect('/admin/settings/contact-setting');
+});
+
+/* GET pages-setting */
+router.get('/settings/pages-setting', async (req, res) => {
+    const setting = await Setting.findOne().lean();
+    res.render('admin/settings/pages-setting', { setting });
+});
+
+/* POST pages-setting */
+router.post('/settings/pages-setting', async (req, res) => {
+    await Setting.findOneAndUpdate({}, req.body, {
+        upsert: true
+    });
+    res.redirect('/admin/settings/pages-setting');
+});
+
+// 👇 Route xem chi tiết sản phẩm (Category)
+router.get('/category-detail/:id', async (req, res) => {
+    try {
+        const product = await Category.findById(req.params.id).lean();
+        if (!product) return res.status(404).send('Sản phẩm không tồn tại');
+        res.render('admin/category/category-detail', {
+            product,
+            title: product.name
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Lỗi server');
+    }
+});
+
+
 
 
 

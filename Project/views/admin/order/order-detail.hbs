@@ -1,28 +1,61 @@
-<h2>Chi tiết Order: {{order._id}}</h2>
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/admin/order">Orders</a>
+        </li>
+        <li class="breadcrumb-item active">Order Detail</li>
+    </ol>
 
-<h3>Khách hàng: {{order.customer.name}}</h3>
-<p>Phone: {{order.customer.phone}}</p>
-<p>Địa chỉ: {{order.customer.address}}</p>
-<p>Thanh toán: {{order.customer.payment}}</p>
-<p>Ngày đặt: {{order.createdAt}}</p>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Order Details: {{order._id}}</h4>
+                </div>
+                <div class="card-body">
+                    <h5>Customer Information</h5>
+                    <p><strong>Name:</strong> {{order.customer.name}}</p>
+                    <p><strong>Phone:</strong> {{order.customer.phone}}</p>
+                    <p><strong>Address:</strong> {{order.customer.address}}</p>
+                    <p><strong>Payment:</strong> {{order.customer.payment}}</p>
+                    <p><strong>Date:</strong> {{order.createdAt}}</p>
 
-<h4>Danh sách sản phẩm:</h4>
-<ul>
-    {{#each order.items}}
-        <li>{{name}} x {{qty}} - {{price}}₫</li>
-    {{/each}}
-</ul>
+                    <hr>
 
-<h3>Tổng tiền: {{order.total}}₫</h3>
+                    <h5>Items</h5>
+                    <ul class="list-group mb-3">
+                        {{#each order.items}}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{name}} x {{qty}}
+                                <span class="badge bg-primary rounded-pill">{{price}}₫</span>
+                            </li>
+                        {{/each}}
+                    </ul>
 
-<p>
-    <strong>Trạng thái:</strong>
-    <select id="status-select">
-        <option value="pending" {{#if (eq order.status "pending")}}selected{{/if}}>Pending</option>
-        <option value="completed" {{#if (eq order.status "completed")}}selected{{/if}}>Completed</option>
-        <option value="cancelled" {{#if (eq order.status "cancelled")}}selected{{/if}}>Cancelled</option>
-    </select>
-</p>
+                    <h4>Total: {{order.total}}₫</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Status</h5>
+                </div>
+                <div class="card-body">
+                    <select class="form-select" id="status-select">
+                        <option value="pending" {{#if (eq order.status "pending")}}selected{{/if}}>Pending</option>
+                        <option value="completed" {{#if (eq order.status "completed")}}selected{{/if}}>Completed</option>
+                        <option value="cancelled" {{#if (eq order.status "cancelled")}}selected{{/if}}>Cancelled</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     document.getElementById('status-select').addEventListener('change', async (e) => {

@@ -1,21 +1,27 @@
-<div class="container-fluid py-5">
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/admin/category">Categories</a>
+        </li>
+        <li class="breadcrumb-item active">Edit Category</li>
+    </ol>
+
     <div class="row justify-content-center">
         <div class="col-12 col-lg-10">
-
             <div class="card shadow-lg rounded-4 border-0">
                 <div class="card-header bg-primary text-white text-center py-3">
                     <h3>Edit Category</h3>
                 </div>
-
                 <div class="card-body p-4">
-
                     <form
                             action="/admin/category/edit/{{category._id}}?_method=PUT"
                             method="POST"
                             class="admin-form">
-
                         <div class="row g-4">
-
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Name</label>
                                 <input
@@ -25,7 +31,6 @@
                                         class="form-control admin-input"
                                         required>
                             </div>
-
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Price</label>
                                 <input
@@ -35,7 +40,6 @@
                                         class="form-control admin-input"
                                         required>
                             </div>
-
                             <div class="col-md-12">
                                 <label class="form-label fw-bold">Image URL</label>
                                 <input
@@ -45,14 +49,16 @@
                                         class="form-control admin-input"
                                         required>
                             </div>
-
                             <div class="col-md-12 text-center">
                                 <img
                                         src="{{category.image}}"
                                         alt="{{category.name}}"
                                         class="img-preview">
                             </div>
-
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Mô tả</label>
+                                <textarea id="description" name="description" class="form-control">{{category.description}}</textarea>
+                            </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Status</label>
                                 <select
@@ -62,9 +68,7 @@
                                     <option value="false" {{#unless category.status}}selected{{/unless}}>Inactive</option>
                                 </select>
                             </div>
-
                         </div>
-
                         <div class="text-center mt-4">
                             <button type="submit" class="btn btn-primary px-5 fw-bold">
                                 Save
@@ -73,12 +77,9 @@
                                 Cancel
                             </a>
                         </div>
-
                     </form>
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>

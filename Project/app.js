@@ -17,7 +17,7 @@ app.engine('hbs', engine({
     partialsDir: path.join(__dirname, 'views/partials'),
     layoutsDir: path.join(__dirname, 'views/layouts'),
     helpers: {
-        eq: (a, b) =>{a === b} ,
+        eq: (a, b) =>a === b ,
         // tính tổng tiền 1 sản phẩm
         calcTotal: (price, qty) => {
             return (price * qty).toLocaleString() + '₫';
@@ -81,12 +81,17 @@ app.use('/admin', adminRouter);
 app.use('/users', usersRouter);
 
 
+
+
 //var shopRouter = require('./routes/shop');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const {Strategy: LocalStrategy} = require("passport-local");
 const User = require('./models/user');
+const Contact = require('./models/contact');
+const Order = require('./models/order');
 const bcryptjs = require('bcryptjs');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.Promise = global.Promise;
@@ -187,7 +192,7 @@ app.get('/logout', (req, res) => {
         res.redirect('/login');
     });
 });
-const Order = require('./models/Order');
+
 
 // POST tạo order
 app.post('/order', async (req,res) => {
@@ -220,22 +225,21 @@ app.get('/bill/:id', async (req,res) => {
         res.status(500).send("Lỗi server");
     }
 });
-
-
-
-
-
-// view engine setup
-
-
-app.use((req, res, next) => {
-    res.locals.user = req.session.user || null;
-    next();
+// ===== CONTACT SEND (USER) =====
+app.post('/contact/send', async (req, res) => {
+    try {
+        await Contact.create(req.body);
+        res.redirect('/contact?success=1');
+    } catch (err) {
+        console.error(err);
+        res.redirect('/contact?error=1');
+    }
 });
 
-
-
-
+// app.use((req, res, next) => {
+//     res.locals.user = req.session.user || null;
+//     next();
+// });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

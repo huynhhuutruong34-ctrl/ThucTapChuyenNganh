@@ -1,30 +1,23 @@
-<style>
-    /* ÉP FULL WIDTH CHO SB ADMIN */
-    .container,
-    .container-fluid {
-        max-width: 100% !important;
-        padding-left: 30px;
-        padding-right: 30px;
-    }
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/admin/category">Categories</a>
+        </li>
+        <li class="breadcrumb-item active">Create Category</li>
+    </ol>
 
-    .card {
-        max-width: 100% !important;
-        width: 100%;
-    }
-</style>
-
-<div class="container-fluid mt-4">
     <div class="row">
         <div class="col-12">
-
             <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-header bg-primary text-white text-center py-3">
                     <h4 class="mb-0">Add Category</h4>
                 </div>
-
                 <div class="card-body px-5 py-4">
                     <form action="/admin/category/create" method="POST">
-
                         <!-- NAME -->
                         <div class="mb-4">
                             <label class="form-label fw-bold">Name</label>
@@ -35,7 +28,6 @@
                                     placeholder="Nhập tên sản phẩm"
                                     required>
                         </div>
-
                         <!-- IMAGE -->
                         <div class="mb-4">
                             <label class="form-label fw-bold">Image URL</label>
@@ -46,7 +38,6 @@
                                     placeholder="https://..."
                                     required>
                         </div>
-
                         <!-- PRICE -->
                         <div class="mb-4">
                             <label class="form-label fw-bold">Price (VND)</label>
@@ -57,7 +48,6 @@
                                     placeholder="VD: 150000"
                                     required>
                         </div>
-
                         <!-- STATUS -->
                         <div class="mb-4">
                             <label class="form-label fw-bold">Status</label>
@@ -66,7 +56,10 @@
                                 <option value="false">Inactive</option>
                             </select>
                         </div>
-
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Mô tả</label>
+                            <textarea id="description" name="description" class="form-control"></textarea>
+                        </div>
                         <!-- BUTTON -->
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary btn-lg">
@@ -76,7 +69,6 @@
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

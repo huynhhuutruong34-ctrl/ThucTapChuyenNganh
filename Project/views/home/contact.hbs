@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Cloth Shop</title>
+    <title>{{setting.contactTitle}} - Cloth Shop</title>
+
     <style>
         body {
             font-family: 'Nunito', sans-serif;
@@ -14,33 +14,6 @@
             padding: 0;
         }
 
-        header {
-            background-color: #cedcd3;
-            padding: 20px 0;
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: white;
-        }
-
-        nav {
-            background-color: #D7EAD9;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        nav a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #333;
-            font-weight: 600;
-            transition: color 0.2s;
-        }
-
-        nav a:hover {
-            color: #161817;
-        }
-
         .container {
             max-width: 1000px;
             margin: 30px auto;
@@ -48,19 +21,17 @@
         }
 
         h1 {
-            font-size: 2rem;
-            color: #161817;
-            margin-bottom: 20px;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         p {
-            line-height: 1.6;
-            margin-bottom: 15px;
             text-align: center;
+            line-height: 1.6;
         }
 
-        .contact-info {
+        .contact-info,
+        form {
             background-color: #fff;
             border-radius: 12px;
             padding: 25px;
@@ -68,104 +39,69 @@
             margin-bottom: 30px;
         }
 
-        .contact-info h3 {
-            margin-bottom: 15px;
-            color: #161817;
-        }
-
-        .contact-info p {
-            margin: 5px 0;
-        }
-
-        form {
-            background-color: #fff;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-        }
-
         form label {
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
             font-weight: 600;
-            color: #161817;
         }
 
-        form input, form textarea {
+        form input,
+        form textarea {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ccc;
             border-radius: 8px;
+            border: 1px solid #ccc;
             margin-top: 5px;
-            font-family: inherit;
         }
 
         form button {
             margin-top: 20px;
-            background-color: #D7EAD9;
+            padding: 12px;
+            width: 100%;
             border: none;
-            padding: 10px 20px;
             border-radius: 8px;
-            font-weight: 600;
+            background-color: #D7EAD9;
+            font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.2s;
         }
 
         form button:hover {
             background-color: #b8d6b9;
-        }
-
-        .map {
-            margin-top: 30px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9rem;
-            color: #999;
-            margin-top: 40px;
-
-        }
-
-        @media(max-width: 600px) {
-            .container {
-                padding: 0 15px;
-            }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Contact Us</h1>
-    <p>We’d love to hear from you! Whether you have a question about our products, orders, or partnerships, feel free to reach out to us using the details below or send us a message.</p>
+
+    <h1>{{setting.contactTitle}}</h1>
+
+    <p>
+        {{setting.contactDescription}}
+    </p>
 
     <div class="contact-info">
-
-        <p><strong>Address:</strong> 123 Fashion Street, District 1, Ho Chi Minh City, Vietnam</p>
-        <p><strong>Phone:</strong> +84 123 456 789</p>
-        <p><strong>Email:</strong> support@clothshop.com</p>
-        <p><strong>Working Hours:</strong> Mon - Sat: 9:00 AM - 8:00 PM</p>
+        <p><strong>Address:</strong> {{setting.contactAddress}}</p>
+        <p><strong>Phone:</strong> {{setting.contactPhone}}</p>
+        <p><strong>Email:</strong> {{setting.contactEmail}}</p>
+        <p><strong>Working Hours:</strong> {{setting.contactWorkingHours}}</p>
     </div>
 
-    <form>
+    <!-- FORM GỬI CONTACT -->
+    <form action="/contact/send" method="POST">
         <h3 style="text-align:center;">Send Us a Message</h3>
-        <label for="name">Your Name</label>
-        <input type="text" id="name" placeholder="Enter your name" required>
 
-        <label for="email">Your Email</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
+        <label>Your Name</label>
+        <input type="text" name="name" required>
 
-        <label for="message">Message</label>
-        <textarea id="message" rows="5" placeholder="Write your message here..." required></textarea>
+        <label>Your Email</label>
+        <input type="email" name="email" required>
+
+        <label>Message</label>
+        <textarea name="message" rows="5" required></textarea>
 
         <button type="submit">Send Message</button>
     </form>
-
 
 </div>
 

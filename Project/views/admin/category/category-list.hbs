@@ -1,39 +1,56 @@
-<a href="/admin/category/create" class="btn btn-primary">
-    Add A Category
-</a>
-<br>
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Stt</th>
-        <th scope="col">Name</th>
-        <th scope="col">Image</th>
-        <th scope="col">Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Delete</th>
-    </tr>
-    </thead>
-    <tbody class="table-group-divider">
-    {{#each categories}}
-        <tr>
-            <th scope="row">{{stt}}</th>
-            <td>{{name}}</td>
-            <td><img src="{{image}}" alt="" class="img-thumbnail" width="100"> </td>
-            <td>{{status}}</td>
-            <td>
-                <a href="/admin/category/edit/{{_id}}">
-                    <i class="fa-solid fa-pen-to-square text-warning"></i>
-                </a>
-            </td>
-            <td>
-                <form action="/admin/category/{{_id}}?_method=DELETE" method="post">
-                    <button type="submit" class="border-0">
-                        <i class="fa-solid fa-trash-alt text-danger"></i>
-                    </button>
-                </form>
-            </td>
-        </tr>
-    {{/each}}
-    </tbody>
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Categories</li>
+    </ol>
 
-</table>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fa fa-table"></i> Category List
+            <a href="/admin/category/create" class="btn btn-primary float-right">
+                <i class="fa fa-plus"></i> Add Category
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each categories}}
+                        <tr>
+                            <th scope="row">{{stt}}</th>
+                            <td>{{name}}</td>
+                            <td><img src="{{image}}" alt="" class="img-thumbnail" width="100"></td>
+                            <td>{{status}}</td>
+                            <td>
+                                <a href="/admin/category/edit/{{_id}}" class="btn btn-warning btn-sm">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                </a>
+                            </td>
+                            <td>
+                                <form action="/admin/category/{{_id}}?_method=DELETE" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
+                                        <i class="fa-solid fa-trash-alt"></i> Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

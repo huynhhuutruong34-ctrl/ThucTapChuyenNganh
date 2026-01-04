@@ -17,7 +17,8 @@ const CategorySchema = new Schema({
     status: {
         type: Boolean,
         default: true
-    }
+    },
+    description: { type: String }
 });
 
 module.exports = mongoose.model('Category', CategorySchema);

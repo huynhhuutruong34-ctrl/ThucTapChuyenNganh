@@ -7,12 +7,13 @@ router.all('/*', (req, res, next) => {
     next();
 });
 
+// LIST
 router.get('/', function(req, res) {
     Category.find({})
         .then(categories => {
             const data = categories.map((cat, index) => ({
                 ...cat.toObject(),
-                stt: index + 1, //tao stt
+                stt: index + 1, // tạo stt
             }));
 
             res.render('admin/category/category-list', { categories: data });
@@ -23,17 +24,19 @@ router.get('/', function(req, res) {
         });
 });
 
-
+// CREATE FORM
 router.get('/create', function(req, res) {
     res.render('admin/category/create');
 });
 
+// CREATE POST
 router.post('/create', function(req, res) {
     const newCategory = new Category({
         name: req.body.name,
         image: req.body.image.trim(),
         status: req.body.status === 'true',
-        price:req.body.price
+        price: req.body.price,
+        description: req.body.description // <-- lưu mô tả
     });
 
     newCategory.save()
@@ -41,19 +44,25 @@ router.post('/create', function(req, res) {
         .catch(err => res.send(err));
 });
 
+// EDIT FORM
 router.get('/edit/:id', function(req, res) {
     Category.findOne({_id: req.params.id}).then((category) => {
-        res.render('admin/category/edit',
-            {title: 'Edit Category', category: category.toObject()});
-    })
+        res.render('admin/category/edit', {
+            title: 'Edit Category',
+            category: category.toObject()
+        });
+    });
 });
+
+// EDIT PUT
 router.put('/edit/:id', async (req, res) => {
     try {
         await Category.findByIdAndUpdate(req.params.id, {
             name: req.body.name,
             image: req.body.image,
             price: req.body.price,
-            status: req.body.status === 'true'
+            status: req.body.status === 'true',
+            description: req.body.description // <-- cập nhật mô tả
         });
 
         res.redirect('/admin/category');
@@ -63,6 +72,7 @@ router.put('/edit/:id', async (req, res) => {
     }
 });
 
+// DELETE
 router.delete('/:id', async (req, res) => {
     try {
         await Category.findByIdAndDelete(req.params.id);
@@ -72,6 +82,5 @@ router.delete('/:id', async (req, res) => {
         res.send('Delete failed');
     }
 });
-
 
 module.exports = router;

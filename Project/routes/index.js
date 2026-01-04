@@ -3,8 +3,9 @@ var router = express.Router();
 const User = require('../models/user');
 const Category = require('../models/category');
 const Product = require('../models/product');
+const Contact = require('../models/contact');
 const Order = require('../models/order');
-
+const Setting = require('../models/Setting');
 const bcryptjs = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -14,12 +15,18 @@ router.all('/*', function(req,
     next();
 })
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('home/index', { title: 'Express' });
+router.get('/', async (req, res) => {
+    const setting = await Setting.findOne().lean();
+    res.render('home/index', { setting });
 });
 
-router.get('/pages', function(req, res, next) {
-    res.render('home/pages', { title: 'Trang' });
+
+router.get('/pages', async (req, res) => {
+    const setting = await Setting.findOne().lean();
+    res.render('home/pages', {
+        title: 'Pages',
+        setting
+    });
 });
 router.get('/shop', async (req, res) => {
     try {
@@ -40,9 +47,9 @@ router.get('/shop', async (req, res) => {
 //     res.render('home/shop', { title: 'Cửa hàng' });
 // });
 
-router.get('/contact', function(req, res, next) {
-    res.render('home/contact', { title: 'Liên Hệ' });
-});
+// router.get('/contact', function(req, res, next) {
+//     res.render('home/contact', { title: 'Liên Hệ' });
+// });
 
 //APP LOGIN
 passport.use(new LocalStrategy({usernameField: 'email'}, function (email, password, done) {
@@ -160,7 +167,32 @@ router.get('/bill/:id', async (req, res) => {
     if(!order) return res.status(404).send("Không tìm thấy hóa đơn");
     res.render('home/bill', { title: 'Hóa đơn', order });
 });
+async function initSetting() {
+    const count = await Setting.countDocuments();
+    if (count === 0) {
+        await Setting.create({
+            address: '12 Nguyễn Huệ, Quận 1, TP.HCM',
+            hotline: '03 2678 3254',
+            email: 'nlfowers@gmail.com',
+            openingHours: '08:00 - 21:00 (Daily)'
+        });
+    }
+}
 
+initSetting();
+router.get('/contact', async (req, res) => {
+    try {
+        const setting = await Setting.findOne().lean();
+
+        res.render('home/contact', {
+            title: 'Contact NFlowers',
+            setting
+        });
+    } catch (err) {
+        console.error(err);
+        res.send('Load contact page failed');
+    }
+});
 
 
 

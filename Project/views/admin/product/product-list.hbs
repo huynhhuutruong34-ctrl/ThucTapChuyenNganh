@@ -1,31 +1,69 @@
-<h2>Danh sách sản phẩm tồn kho</h2>
-<p><strong>Tổng giá trị tồn kho:</strong> <span id="totalValue">{{totalValue}}</span> VND</p>
-<p><strong>Tổng số lượng tồn kho:</strong> <span id="totalQty">{{totalQty}}</span></p>
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Products</li>
+    </ol>
 
-<table border="1" cellpadding="8">
-    <thead>
-    <tr>
-        <th>Tên sản phẩm</th>
-        <th>Giá (VND)</th>
-        <th>Số lượng tồn kho</th>
-        <th>Hành động</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#each products}}
-        <tr data-id="{{this._id}}">
-            <td>{{this.name}}</td>
-            <td>{{this.price}}</td>
-            <td>
-                <input type="number" class="qty-input" value="{{this.qty}}" min="0">
-            </td>
-            <td>
-                <button class="update-btn">Cập nhật</button>
-            </td>
-        </tr>
-    {{/each}}
-    </tbody>
-</table>
+    <div class="row mb-4">
+        <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-info o-hidden h-100">
+                <div class="card-body">
+                    <div class="card-body-icon">
+                        <i class="fa fa-fw fa-dollar-sign"></i>
+                    </div>
+                    <div class="mr-5"><strong>Total Value:</strong> <span id="totalValue">{{totalValue}}</span> VND</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-secondary o-hidden h-100">
+                <div class="card-body">
+                    <div class="card-body-icon">
+                        <i class="fa fa-fw fa-cubes"></i>
+                    </div>
+                    <div class="mr-5"><strong>Total Qty:</strong> <span id="totalQty">{{totalQty}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fa fa-table"></i> Product Inventory
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Price (VND)</th>
+                        <th>Stock Quantity</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each products}}
+                        <tr data-id="{{this._id}}">
+                            <td>{{this.name}}</td>
+                            <td>{{this.price}}</td>
+                            <td>
+                                <input type="number" class="form-control qty-input" value="{{this.qty}}" min="0">
+                            </td>
+                            <td>
+                                <button class="btn btn-success update-btn">Update</button>
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

@@ -1,0 +1,45 @@
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Contact Messages</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fa fa-envelope"></i> Contact Messages
+        </div>
+        <div class="card-body">
+            {{#if contacts.length}}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#each contacts}}
+                            <tr>
+                                <td>{{@index}}</td>
+                                <td>{{this.name}}</td>
+                                <td>{{this.email}}</td>
+                                <td>{{this.message}}</td>
+                                <td>{{this.createdAt}}</td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            {{else}}
+                <p class="text-center">No contact messages found.</p>
+            {{/if}}
+        </div>
+    </div>
+</div>
